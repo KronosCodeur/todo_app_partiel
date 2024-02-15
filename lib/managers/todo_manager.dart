@@ -25,10 +25,12 @@ class TodoManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateStatus(Todo todo, bool status) {
-    Todo temp = Todo(title: todo.title, endDate: todo.endDate, status: status);
+  updateStatus(Todo todo) {
+    Todo temp =
+        Todo(title: todo.title, endDate: todo.endDate, status: !todo.status);
     removeTodo(todo);
     addTodo(temp);
+    setCurrentTodo(todo);
     notifyListeners();
   }
 }

@@ -59,12 +59,15 @@ class TodoItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => TodoEditionPage(todo: todo),
-                    ),
-                  ),
+                  onTap: () {
+                    todoManager.setCurrentTodo(todo);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TodoEditionPage(),
+                      ),
+                    );
+                  },
                   child: Icon(
                     Icons.edit_rounded,
                     size: 30,
