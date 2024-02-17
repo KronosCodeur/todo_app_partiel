@@ -4,8 +4,22 @@ import 'package:todo/models/todo.dart';
 class TodoManager extends ChangeNotifier {
   List<Todo> todos = [];
   Todo? currentTodo;
-  addTodo(Todo todo) {
-    todos.add(todo);
+  String title = '';
+  String date = '';
+  bool status = false;
+  setDate(d) {
+    date = d;
+    notifyListeners();
+  }
+
+  setTitle(t) {
+    title = t;
+    notifyListeners();
+  }
+
+  addTodo() {
+    todos
+        .add(Todo(title: title, endDate: DateTime.parse(date), status: status));
     notifyListeners();
   }
 
@@ -15,22 +29,19 @@ class TodoManager extends ChangeNotifier {
   }
 
   updateTodo(Todo todo) {
-    addTodo(todo);
-    removeTodo(todo);
-    notifyListeners();
+    todos.remove(currentTodo!);
+    currentTodo = todo;
+    todos.add(currentTodo!);
   }
 
   setCurrentTodo(Todo todo) {
-    currentTodo = todo;
+    currentTodo =
+        Todo(title: title, endDate: DateTime.parse(date), status: status);
     notifyListeners();
   }
 
-  updateStatus(Todo todo) {
-    Todo temp =
-        Todo(title: todo.title, endDate: todo.endDate, status: !todo.status);
-    removeTodo(todo);
-    addTodo(temp);
-    setCurrentTodo(todo);
+  updateStatus(bool status) {
+    currentTodo!.status = status;
     notifyListeners();
   }
 }

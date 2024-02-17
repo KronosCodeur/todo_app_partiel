@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/constants/constants.dart';
 import 'package:todo/managers/todo_manager.dart';
 import 'package:todo/models/todo.dart';
+import 'package:todo/pages/todo_list_page.dart';
 
 class TodoEditionPage extends StatelessWidget {
   const TodoEditionPage({super.key});
@@ -41,6 +42,7 @@ class TodoEditionPage extends StatelessWidget {
               const Gap(10),
               TextFormField(
                 initialValue: todo.title,
+                onChanged: (value) => todoManager.setTitle(value),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -69,6 +71,7 @@ class TodoEditionPage extends StatelessWidget {
                   Expanded(
                     flex: 7,
                     child: TextFormField(
+                      onChanged: (value) => todoManager.setDate(value),
                       initialValue: todo.endDate.toString().substring(0, 11),
                       keyboardType: TextInputType.datetime,
                       decoration: InputDecoration(
@@ -112,7 +115,7 @@ class TodoEditionPage extends StatelessWidget {
                         Checkbox(
                           value: todo.status,
                           onChanged: (value) {
-                            todoManager.updateStatus(todo);
+                            todoManager.updateStatus(value!);
                           },
                         ),
                       ],
@@ -122,7 +125,11 @@ class TodoEditionPage extends StatelessWidget {
               ),
               const Gap(15),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  todoManager.updateTodo(todo);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const TodoListPage()));
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.teal,

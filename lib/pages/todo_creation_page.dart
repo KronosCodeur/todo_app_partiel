@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/constants/constants.dart';
 import 'package:todo/managers/todo_manager.dart';
-import 'package:todo/models/todo.dart';
 import 'package:todo/pages/todo_list_page.dart';
 
 class TodoCreationPage extends StatefulWidget {
@@ -41,6 +40,7 @@ class _TodoCreationPageState extends State<TodoCreationPage> {
               children: [
                 TextFormField(
                   controller: title,
+                  onChanged: (value) => todoManager.setTitle(value),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -66,6 +66,7 @@ class _TodoCreationPageState extends State<TodoCreationPage> {
                 const Gap(10),
                 TextFormField(
                   controller: date,
+                  onChanged: (value) => todoManager.setDate(value),
                   keyboardType: TextInputType.datetime,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -92,12 +93,7 @@ class _TodoCreationPageState extends State<TodoCreationPage> {
                 const Gap(15),
                 InkWell(
                   onTap: () {
-                    todoManager.addTodo(
-                      Todo(
-                          title: title.text,
-                          endDate: DateTime.parse(date.text),
-                          status: false),
-                    );
+                    todoManager.addTodo();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
